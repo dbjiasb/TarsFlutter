@@ -1,0 +1,28 @@
+module test
+{   
+	struct TestReq
+    {
+        0 optional int    id;
+        1 optional string name;
+    };
+
+    struct TestData
+    {
+        0 optional int               id;
+        1 optional string            code;
+        2 optional vector<string>    stringList;
+        3 optional map<int, TestReq> mapData;
+    };
+
+    struct TestRsp
+    {
+        0 optional vector<TestData>           data;
+        1 optional vector<byte>               bytesData;
+        2 optional map<int, TestData>         mapData;
+        3 optional vector<string>             stringList;
+        4 optional map<int, vector<TestData>> nestData;
+        5 optional long                       id;
+        6 optional string                     name;
+    };
+	
+};
