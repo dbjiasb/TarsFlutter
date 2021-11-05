@@ -4,6 +4,15 @@ Tars RPC通信框架的Flutter支持库(Flutter Support Library For Tars RPC fra
 
 > [什么是Tars](https://github.com/TarsCloud/TarsCpp)
 
+# 引入方法
+
+在Flutter模块`pubspec.yaml`中添加：
+
+```
+dependencies:
+  tars_flutter: ^0.1.0
+
+```
 
 ## 本项目使用场景
 
