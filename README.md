@@ -140,7 +140,7 @@ module test
 
 ### 定制接入
 
-   > 可以参考 [base_tars_http.dart](lib\tars\net\base_tars_http.dart) 自行封装网络请求的收发,涉及TUP数据封包及解包的主要是以下三个方法：
+   > 可以参考 [base_tars_http.dart](lib/tars/net/base_tars_http.dart) 自行封装网络请求的收发,涉及TUP数据封包及解包的主要是以下三个方法：
 
     
     ```
