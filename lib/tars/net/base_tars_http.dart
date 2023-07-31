@@ -23,7 +23,7 @@ class BaseTarsHttp {
   BaseTarsHttp(this.baseUrl, this.path, this.servantName,
       {this.timeOut = 60000, this.debugLog = false}) {
     dio = Dio(BaseOptions(
-        connectTimeout: timeOut,
+        connectTimeout: Duration(milliseconds: timeOut),
         baseUrl: baseUrl,
         responseType: ResponseType.bytes,
         headers: {HttpHeaders.contentTypeHeader: "application/x-wup"}));
