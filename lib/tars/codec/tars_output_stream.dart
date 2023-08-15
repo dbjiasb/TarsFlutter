@@ -157,7 +157,14 @@ class TarsOutputStream {
     }
     //int64
     //紧跟8个字节整型数据
-    if (n >= -9223372036854775808 && n <= 9223372036854775807) {
+    int int64MaxValue = 0;
+    if (kIsWeb) {
+      int64MaxValue = double.maxFinite.toInt();
+    } else {
+      int64MaxValue = 9223372036854775807;
+    }
+
+    if (n >= -int64MaxValue && n <= int64MaxValue) {
       writeHead(TarsStructType.LONG.index, tag);
       bw.writeInt(n, 8);
       return;
