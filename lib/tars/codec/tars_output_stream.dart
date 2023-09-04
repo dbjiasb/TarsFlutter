@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 
 import './tars_encode_exception.dart';
 import './tars_struct.dart';
@@ -155,11 +156,10 @@ class TarsOutputStream {
       bw.writeInt(n, 4);
       return;
     }
-    //int64
-    //紧跟8个字节整型数据
-    int int64MaxValue = double.maxFinite.toInt();
 
-    if (n >= -int64MaxValue && n <= int64MaxValue) {
+    //在web下，数字超过了js支持的最大值，编译报错
+    // if (n >= -9223372036854775808 && n <= 9223372036854775807) {
+      if (BigInt.from(n) >= -BigInt.parse("-9223372036854775807") && BigInt.from(n) <= BigInt.parse("9223372036854775807")) {
       writeHead(TarsStructType.LONG.index, tag);
       bw.writeInt(n, 8);
       return;

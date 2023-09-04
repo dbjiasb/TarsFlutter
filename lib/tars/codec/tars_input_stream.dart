@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:core';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
+import 'package:fixnum/fixnum.dart';
 
 import 'tars_struct.dart';
 import 'tars_decode_exception.dart';
@@ -43,8 +45,9 @@ class BinaryReader {
     //   position += len;
     //   return result;
     // }
+    var intList = buffer.getRange(position, position + len).toList();
     var bytes =
-        Uint8List.fromList(buffer.getRange(position, position + len).toList());
+        Uint8List.fromList(intList);
     var byteBuffer = bytes.buffer;
     var data = ByteData.view(byteBuffer);
     if (len == 1) {
@@ -57,7 +60,9 @@ class BinaryReader {
       result = data.getInt32(0, Endian.big);
     }
     if (len == 8) {
-      result = data.getInt64(0, Endian.big);
+      //web下不支持getInt64方法
+      // result = data.getInt64(0, Endian.big);
+      result = kIsWeb ? Int64.fromBytesBigEndian(intList).toInt() : data.getInt64(0, Endian.big);
     }
     position += len;
     return result;
