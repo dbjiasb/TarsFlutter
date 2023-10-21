@@ -159,7 +159,7 @@ class TarsOutputStream {
 
     //在web下，数字超过了js支持的最大值，编译报错
     // if (n >= -9223372036854775808 && n <= 9223372036854775807) {
-      if (BigInt.from(n) >= -BigInt.parse("-9223372036854775807") && BigInt.from(n) <= BigInt.parse("9223372036854775807")) {
+      if (BigInt.from(n) >= BigInt.parse("-9223372036854775807") && BigInt.from(n) <= BigInt.parse("9223372036854775807")) {
       writeHead(TarsStructType.LONG.index, tag);
       bw.writeInt(n, 8);
       return;
