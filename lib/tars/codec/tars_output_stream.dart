@@ -19,6 +19,21 @@ class BinaryWriter {
   }
 
   void writeInt(int value, int len) {
+    if (len == 8 && kIsWeb) {
+      Uint8List byteList = Uint8List(8);
+      byteList[7] = (value & 0xFF);
+      byteList[6] = ((value >> 8) & 0xFF);
+      byteList[5] = ((value >> 16) & 0xFF);
+      byteList[4] = ((value >> 24) & 0xFF);
+      byteList[3] = ((value >> 32) & 0xFF);
+      byteList[2] = ((value >> 40) & 0xFF);
+      byteList[1] = ((value >> 48) & 0xFF);
+      byteList[0] = ((value >> 56) & 0xFF);
+
+      buffer.addAll(byteList);
+      position += 8;
+      return;
+    }
     var b = Uint8List(len).buffer;
     var bytes = ByteData.view(b);
     if (len == 1) {

@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
-import 'dart:core';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
-import 'package:fixnum/fixnum.dart';
 
 import 'tars_struct.dart';
 import 'tars_decode_exception.dart';
