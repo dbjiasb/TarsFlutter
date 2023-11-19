@@ -60,9 +60,14 @@ class BinaryReader {
     if (len == 8) {
       //web下不支持getInt64方法
       // result = data.getInt64(0, Endian.big);
-      result = kIsWeb ? Int64.fromBytesBigEndian(intList).toInt() : data.getInt64(0, Endian.big);
-    }
-    position += len;
+      if (kIsWeb) {
+        int high = data.getInt32(0, Endian.big);
+        int low = data.getInt32(4, Endian.big);
+        result = high << 32 | low;
+      } else {
+        result = data.getInt64(0, Endian.big);
+      }
+    }    position += len;
     return result;
   }
 
