@@ -49,7 +49,7 @@ class BinaryReader {
     var byteBuffer = bytes.buffer;
     var data = ByteData.view(byteBuffer);
     if (len == 1) {
-      result = data.getUint8(0);
+      result = data.getInt8(0);
     }
     if (len == 2) {
       result = data.getInt16(0, Endian.big);
