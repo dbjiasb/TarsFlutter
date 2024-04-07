@@ -61,9 +61,9 @@ class BinaryReader {
       //web下不支持getInt64方法
       // result = data.getInt64(0, Endian.big);
       if (kIsWeb) {
-        int high = data.getInt32(0, Endian.big);
-        int low = data.getInt32(4, Endian.big);
-        result = high << 32 | low;
+        BigInt bigHigh = BigInt.from(data.getInt32(0, Endian.big)) << 32;
+        BigInt bigLow = BigInt.from(data.getUint32(4, Endian.big));
+        result = (bigHigh | bigLow).toInt();
       } else {
         result = data.getInt64(0, Endian.big);
       }

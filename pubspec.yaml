@@ -1,6 +1,6 @@
 name: tars_flutter
 description: Flutter Support Library For Tars RPC framework
-version: 0.1.3
+version: 0.1.4
 homepage: "https://github.com/brooklet/TarsFlutter"
 
 environment:
