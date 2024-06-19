@@ -166,28 +166,18 @@ class BaseTarsHttp {
   }
 
   Uint8List _encode(Uint8List origin) {
-
-    // origin = Uint8List.fromList(utf8.encode("1234567890"));//Utf8Encoder().convert("1234567890");
-    
     final key = Encrypt.Key.fromBase64(kAESEncodeKey);
-    // final IV = Encrypt.IV.fromUtf8("0000000000000000");
-
     //AES Encode
     //设置ecb模式
     final encrypter = Encrypt.Encrypter(
         Encrypt.AES(key, mode: Encrypt.AESMode.ecb, padding: 'PKCS7'));
-    //Encode return base64
     String aesEncodedStr = encrypter.encryptBytes(origin, iv: null).base64;
-
     Uint8List rett = Uint8List.fromList(utf8.encode(aesEncodedStr));
-
     return rett;//Utf8Encoder().convert(aesEncodedStr);
   }
 
   /// decode flow: origin -> AES.ECB -> Base64 -> Url Ecode
   Uint8List _decode(String origin) {
-
-    // origin = "C9u98BlFbmeFsxRgnt75FQ==";
 
     //Decode base64
     Encrypted aesEncodeData = Encrypt.Encrypted.fromBase64(origin);

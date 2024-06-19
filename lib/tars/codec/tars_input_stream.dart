@@ -117,6 +117,17 @@ class TarsInputStream {
     br.position = pos;
   }
 
+  /// 假定下一位是类型来取值，慎用，临时解决遇到服务端返回空结构体的问题
+  /// PS：空的结构体，服务端先给一个STRUCT_BEGIN，再给一个STRUCT_END
+  static int readNextBinaryReaderHead(BinaryReader bb) {
+    int nextInx = bb.position + 1;
+    if (nextInx >= bb.length) {
+      return -1;
+    }
+    var b = bb.buffer[nextInx];
+    return b & 15;
+  }
+
   static int readBinaryReaderHead(HeadData hd, BinaryReader bb) {
     if (bb.position >= bb.length) {
       throw TarsDecodeException('read file to end');
@@ -610,6 +621,16 @@ class TarsInputStream {
       readHead(hd);
       var t = TarsStructType.values[hd.type];
       if (t == TarsStructType.STRUCT_BEGIN) {
+
+        /// 结构体字段解析开始后的一个子节一定是类型，这里尝试读下一个类型，
+        /// 如果发现是STRUCT_END，则结构体是空内容直接返回
+        /// PS：空的结构体，服务端先给一个STRUCT_BEGIN，再给一个STRUCT_END
+        int nextType = readNextBinaryReaderHead(br);
+        if (nextType == TarsStructType.STRUCT_END.index) {
+          skipToStructEnd();
+          return ts;
+        }
+
         var copyTs = ts.deepCopy() as TarsStruct;
         copyTs.readFrom(this);
         skipToStructEnd();
